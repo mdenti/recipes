@@ -1,21 +1,29 @@
 import React, { Component, createContext } from 'react';
 
+import { getRecipes, addNewRecipe } from './Api';
+
 const recipeContext = createContext({
     recipes: [],
     addNewRecipe: () => {},
 });
 
-export function withRecipeContextProvider(WrappedComponent, initialRecipes) {
+export function withRecipeContextProvider(WrappedComponent) {
     return class extends Component {
         constructor(props) {
             super(props);
+
             this.state = {
-                recipes: initialRecipes,
+                recipes: [],
                 addNewRecipe: this.addNewRecipe.bind(this),
             };
         }
-        addNewRecipe(recipe) {
-            this.setState({ recipes: this.state.recipes.concat([recipe])});
+        async componentDidMount() {
+            const initialRecipes = await getRecipes();
+            this.setState({ recipes: initialRecipes });
+        }
+        async addNewRecipe(recipe) {
+            const recipes = await addNewRecipe(recipe);
+            this.setState({ recipes });
         }
         render() {
             return (

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 
 import defaultRecipes from './DefaultRecipes';
-import recipeContext from './RecipeContext';
+import { withRecipeContextProvider } from './RecipeContext';
 import RecipeList from './RecipeList';
 
 class App extends Component {
@@ -12,15 +12,13 @@ class App extends Component {
   }
   render() {
     return (
-      <recipeContext.Provider value={this.state}>
-        <div className="App">
-          <header className="App-header">
-            <RecipeList />
-          </header>
-        </div>
-      </recipeContext.Provider>
+      <div className="App">
+        <header className="App-header">
+          <RecipeList />
+        </header>
+      </div>
     );
   }
 }
 
-export default App;
+export default withRecipeContextProvider(App, defaultRecipes);

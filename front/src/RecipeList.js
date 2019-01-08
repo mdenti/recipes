@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 
-import recipeContext from './RecipeContext';
+import { withRecipeContextConsumer } from './RecipeContext';
 
 class RecipeListItem extends Component {
     render() {
@@ -17,18 +17,14 @@ class RecipeListItem extends Component {
 class RecipeList extends Component {
     render() {
         return (
-            <recipeContext.Consumer>
-                {({ recipes }) => (
-                    <Fragment>
-                        <div>Recipe list</div>
-                        <div>
-                            {recipes.map((recipe) => <RecipeListItem recipe={recipe} key={recipe.id} />)}
-                        </div>
-                    </Fragment>
-                )}
-            </recipeContext.Consumer>
+            <Fragment>
+                <div>Recipe list</div>
+                <div>
+                    {this.props.recipes.map((recipe) => <RecipeListItem recipe={recipe} key={recipe.id} />)}
+                </div>
+            </Fragment>
         );
     }
 }
 
-export default RecipeList;
+export default withRecipeContextConsumer(RecipeList);

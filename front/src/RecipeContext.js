@@ -1,12 +1,21 @@
 import React, { Component, createContext } from 'react';
 
-const recipeContext = createContext({ recipes: {} });
+const recipeContext = createContext({
+    recipes: [],
+    addNewRecipe: () => {},
+});
 
 export function withRecipeContextProvider(WrappedComponent, initialRecipes) {
     return class extends Component {
         constructor(props) {
             super(props);
-            this.state = { recipes: initialRecipes };
+            this.state = {
+                recipes: initialRecipes,
+                addNewRecipe: this.addNewRecipe.bind(this),
+            };
+        }
+        addNewRecipe(recipe) {
+            this.setState({ recipes: this.state.recipes.concat([recipe])});
         }
         render() {
             return (
@@ -23,7 +32,7 @@ export function withRecipeContextConsumer(WrappedComponent) {
         render() {
             return (
                 <recipeContext.Consumer>
-                    {({ recipes }) => <WrappedComponent recipes={recipes} {...this.props} />}
+                    {(recipeContext) => <WrappedComponent recipeContext={recipeContext} {...this.props} />}
                 </recipeContext.Consumer>
             );
         }

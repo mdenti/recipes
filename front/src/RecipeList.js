@@ -1,14 +1,17 @@
 import React, { Component, Fragment } from 'react';
+import { Link } from 'react-router-dom';
 
 import { withRecipeContextConsumer } from './RecipeContext';
 
 class RecipeListItem extends Component {
     render() {
-        const { recipe: { name, picture } } = this.props;
+        const { recipe: { name, picture, id } } = this.props;
         return (
             <div>
-                <img src={picture} alt={name}/>
-                <div>{name}</div>
+                <Link to={`/recipe/${id}`}>
+                    <img src={picture} alt={name}/>
+                    <div>{name}</div>
+                </Link>
             </div>
         );
     }

@@ -1,6 +1,6 @@
 import defaultRecipes from './DefaultRecipes';
 
-async function apiRequest(url) {
+async function sleep(ms) {
     const promise = new Promise((resolve) => {
         setTimeout(() => {
             resolve();
@@ -8,6 +8,10 @@ async function apiRequest(url) {
     });
 
     return promise;
+}
+
+async function apiRequest(url) {
+    return sleep(500);
 }
 
 export async function getRecipes() {

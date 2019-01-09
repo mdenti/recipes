@@ -16,7 +16,7 @@ class RecipeListItem extends Component {
 
 class RecipeList extends Component {
     render() {
-        const { recipes, addNewRecipe } = this.props.recipeContext;
+        const { recipes, addNewRecipe } = this.props.recipeCtx;
         return (
             <Fragment>
                 <div>Recipe list</div>

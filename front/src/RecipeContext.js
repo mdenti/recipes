@@ -2,7 +2,7 @@ import React, { Component, createContext } from 'react';
 
 import { getRecipes, addNewRecipe } from './Api';
 
-const recipeContext = createContext({
+const recipeCtx = createContext({
     recipes: [],
     addNewRecipe: () => {},
 });
@@ -27,9 +27,9 @@ export function withRecipeContextProvider(WrappedComponent) {
         }
         render() {
             return (
-                <recipeContext.Provider value={this.state}>
+                <recipeCtx.Provider value={this.state}>
                     <WrappedComponent {...this.props} />
-                </recipeContext.Provider>
+                </recipeCtx.Provider>
             );
         }
     }
@@ -39,9 +39,9 @@ export function withRecipeContextConsumer(WrappedComponent) {
     return class extends Component {
         render() {
             return (
-                <recipeContext.Consumer>
-                    {(recipeContext) => <WrappedComponent recipeContext={recipeContext} {...this.props} />}
-                </recipeContext.Consumer>
+                <recipeCtx.Consumer>
+                    {(recipeContext) => <WrappedComponent recipeCtx={recipeContext} {...this.props} />}
+                </recipeCtx.Consumer>
             );
         }
     }

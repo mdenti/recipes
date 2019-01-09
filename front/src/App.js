@@ -2,15 +2,16 @@ import React, { Component } from 'react';
 import './App.css';
 
 import { withRecipeContextProvider } from './RecipeContext';
+
+import Header from './Header';
 import AppRoutes from './AppRoutes';
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <AppRoutes />
-        </header>
+        <Header />
+        <AppRoutes />
       </div>
     );
   }

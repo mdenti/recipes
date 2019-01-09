@@ -28,9 +28,9 @@ class RecipeList extends Component {
                 <div>
                     {(() => {
                         if ((!recipes || !recipes.length) && requestStatus === RequestStatus.RUNNING) {
-                            return <div>Loading..</div>;
+                            return 'Loading..';
                         } else if (!recipes || !recipes.length) {
-                            return <div>No recipes found</div>
+                            return 'No recipes found';
                         }
                         return recipes.map((recipe) => <RecipeListItem recipe={recipe} key={recipe.id} />);
                     })()

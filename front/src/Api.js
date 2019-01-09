@@ -28,6 +28,10 @@ export async function getRecipes() {
 export async function addNewRecipe(recipe) {
     await apiRequest();
     const recipes = JSON.parse(window.localStorage.getItem('recipes')) || defaultRecipes;
-    window.localStorage.setItem('recipes', JSON.stringify(recipes.concat([recipe])));
-    return recipes.concat([recipe]);
+
+    const newId = Math.max.apply(Math, recipes.map(function(o) { return o.id; })) + 1;
+    const newRecipe = Object.assign({}, recipe, { id: newId })
+
+    window.localStorage.setItem('recipes', JSON.stringify(recipes.concat([newRecipe])));
+    return recipes.concat([newRecipe]);
 }

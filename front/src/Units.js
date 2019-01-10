@@ -1,12 +1,12 @@
 const weights = {
-    gram: 'g',
-    kilo: 'kg',
+  gram: 'g',
+  kilo: 'kg',
 };
 
 const volumes = {
-    liter: 'l',
-    deciliter: 'dl',
-    centiliter: 'cl',
+  liter: 'l',
+  deciliter: 'dl',
+  centiliter: 'cl',
 };
 
 exports.weights = weights;

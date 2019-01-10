@@ -1,22 +1,24 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import RequestStatus from './RequestStatus';
 import { withRecipeContextConsumer } from './RecipeContext';
 
-class RecipeView extends Component {
-    render() {
-        const { match, recipeCtx } = this.props;
-        const recipe = recipeCtx.recipes.find((recipe) => (recipe.id === parseInt(match.params.id)));
+function RecipeView(props) {
+  const { match, recipeCtx } = props;
+  const recipe = recipeCtx.recipes.find(r => (r.id === parseInt(match.params.id, 10)));
 
-        if (!recipe && recipeCtx.requestStatus === RequestStatus.RUNNING) {
-            return <div>Loading..</div>;
-        } else if (!recipe) {
-            return <div>Recipe not found</div>
-        }
-        return (
-            <div>Recipe View {recipe.id}</div>
-        );
-    }
+  if (!recipe && recipeCtx.requestStatus === RequestStatus.RUNNING) {
+    return <div>Loading..</div>;
+  }
+  if (!recipe) {
+    return <div>Recipe not found</div>;
+  }
+  return (
+    <div>
+      Recipe View
+      {recipe.id}
+    </div>
+  );
 }
 
 export default withRecipeContextConsumer(RecipeView);

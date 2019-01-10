@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import './App.css';
+import React, { Component, Fragment } from 'react';
+import { CssBaseline } from '@material-ui/core';
 
 import { withRecipeContextProvider } from './RecipeContext';
 
@@ -9,10 +9,13 @@ import AppRoutes from './AppRoutes';
 class App extends Component {
   render() {
     return (
-      <div className="App">
+      <Fragment>
+        <CssBaseline />
         <Header />
-        <AppRoutes />
-      </div>
+        <main>
+          <AppRoutes />
+        </main>
+      </Fragment>
     );
   }
 }

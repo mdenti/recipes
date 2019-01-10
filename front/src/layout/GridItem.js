@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Grid, CardActionArea, withStyles } from '@material-ui/core';
+import { Grid, CardActionArea } from '@material-ui/core';
 
 function GridItem(props) {
     const { children, linkTo, ...otherProps } = props;

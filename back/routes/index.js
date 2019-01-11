@@ -1,10 +1,12 @@
 const express = require('express');
 
-const router = express.Router();
+export default function getIndexRouter() {
+  const router = express.Router();
 
-/* GET home page. */
-router.get('/', (req, res) => {
-  res.render('index', { title: 'Express' });
-});
+  /* GET home page. */
+  router.get('/', (req, res) => {
+    res.render('index', { title: 'Express' });
+  });
 
-module.exports = router;
+  return router;
+}

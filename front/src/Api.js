@@ -1,37 +1,24 @@
-import defaultRecipes from './DefaultRecipes';
-
-async function sleep(ms) {
-  const promise = new Promise((resolve) => {
-    setTimeout(() => {
-      resolve();
-    }, ms);
-  });
-
-  return promise;
-}
-
-async function apiRequest() {
-  return sleep(500);
+async function apiRequest(url, options = {}) {
+  const response = await fetch(url, options);
+  if (response.status !== 200) {
+    throw new Error(`Request error: ${response.status} ${response.statusText}`);
+  }
+  const content = await response.json();
+  return content;
 }
 
 export async function getRecipes() {
-  await apiRequest();
-
-  const recipes = window.localStorage.getItem('recipes');
-  if (!recipes) {
-    window.localStorage.setItem('recipes', JSON.stringify(defaultRecipes));
-    return defaultRecipes;
-  }
-  return JSON.parse(recipes);
+  return apiRequest('http://localhost:5000/recipes');
 }
 
 export async function addNewRecipe(recipe) {
-  await apiRequest();
-  const recipes = JSON.parse(window.localStorage.getItem('recipes')) || defaultRecipes;
-
-  const newId = Math.max(...recipes.map(o => o.id)) + 1;
-  const newRecipe = Object.assign({}, recipe, { id: newId });
-
-  window.localStorage.setItem('recipes', JSON.stringify(recipes.concat([newRecipe])));
-  return recipes.concat([newRecipe]);
+  await apiRequest('http://localhost:5000/recipes', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(recipe),
+  });
+  return getRecipes();
 }

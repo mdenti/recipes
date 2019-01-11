@@ -1,13 +1,11 @@
-exports.up = (knex) => {
-  knex.schema.createTable('recipes', (table) => {
+exports.up = knex => knex.schema
+  .createTable('recipes', (table) => {
     table.increments();
-    table.string('name');
-    table.string('picture');
-    table.string('description');
+    table.string('name').notNullable();
+    table.string('picture').defaultTo(null);
+    table.string('description').defaultTo('');
     table.timestamps();
   });
-};
 
-exports.down = (knex) => {
-  knex.schema.dropTable('recipes');
-};
+exports.down = knex => knex.schema
+  .dropTable('recipes');

@@ -7,8 +7,10 @@ const knex = Knex(knexConfig.development);
 /**
  * Returns the context for the app
  */
-export default function getContext() {
+function getContext() {
   return {
     knex,
   };
 }
+
+module.exports = getContext;

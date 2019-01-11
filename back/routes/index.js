@@ -1,6 +1,6 @@
 const express = require('express');
 
-export default function getIndexRouter() {
+function getIndexRouter() {
   const router = express.Router();
 
   /* GET home page. */
@@ -10,3 +10,5 @@ export default function getIndexRouter() {
 
   return router;
 }
+
+module.exports = getIndexRouter;

@@ -1,6 +1,6 @@
 const express = require('express');
 
-export default function getUsersRouter() {
+function getUsersRouter() {
   const router = express.Router();
 
   /* GET users listing. */
@@ -10,3 +10,5 @@ export default function getUsersRouter() {
 
   return router;
 }
+
+module.exports = getUsersRouter;

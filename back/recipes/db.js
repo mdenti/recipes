@@ -8,7 +8,8 @@ async function getAllRecipes(knex) {
 async function getRecipeById(knex, id) {
   return knex(RECIPE_TABLE_NAME)
     .select()
-    .where({ id });
+    .where({ id })
+    .first();
 }
 
 async function insertNewRecipe(knex, recipeData) {

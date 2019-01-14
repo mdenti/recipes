@@ -17,7 +17,7 @@ async function checkLoginInfo(ctx, { email, password }) {
 }
 
 async function createNewUser(ctx, { email, password }) {
-  const user = await getUserByEmail(ctx.knex, email);
+  const user = await getUserByEmail(ctx, email);
   if (user) {
     throw new Error('Email already in use');
   }

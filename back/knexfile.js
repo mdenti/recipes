@@ -2,9 +2,12 @@
 
 module.exports = {
   development: {
-    client: 'sqlite3',
+    client: 'mysql',
     connection: {
-      filename: './dev.sqlite3',
+      host: process.env.MYSQL_HOST,
+      user: process.env.MYSQL_USER,
+      password: process.env.MYSQL_PASSWORD,
+      database: process.env.MYSQL_DATABASE,
     },
   },
 };

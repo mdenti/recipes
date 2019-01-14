@@ -1,5 +1,7 @@
+const baseApiUrl = `http://${process.env.REACT_APP_BACK_HOST}:${process.env.REACT_APP_BACK_PORT}`;
+
 async function apiRequest(url, options = {}) {
-  const response = await fetch(url, options);
+  const response = await fetch(`${baseApiUrl}${url}`, options);
   if (response.status !== 200) {
     throw new Error(`Request error: ${response.status} ${response.statusText}`);
   }
@@ -8,11 +10,11 @@ async function apiRequest(url, options = {}) {
 }
 
 export async function getRecipes() {
-  return apiRequest('http://localhost:5000/recipes');
+  return apiRequest('/recipes');
 }
 
 export async function addNewRecipe(recipe) {
-  await apiRequest('http://localhost:5000/recipes', {
+  await apiRequest('/recipes', {
     method: 'POST',
     headers: {
       Accept: 'application/json',

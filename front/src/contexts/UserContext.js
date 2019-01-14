@@ -1,7 +1,7 @@
 import React, { Component, createContext } from 'react';
 
-import RequestStatus from './RequestStatus';
-import { authenticateUser, registerNewUser } from './Api';
+import RequestStatus from '../RequestStatus';
+import { authenticateUser, registerNewUser } from '../Api';
 
 const userCtx = createContext({
   user: {},

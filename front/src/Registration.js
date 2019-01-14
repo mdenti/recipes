@@ -3,9 +3,10 @@ import { Redirect } from 'react-router-dom';
 import { TextField } from '@material-ui/core';
 
 import RequestStatus from './RequestStatus';
-import { userContextConsumer } from './UserContext';
+import { userContextConsumer } from './contexts/UserContext';
 import Form from './layout/Form';
 import FormSubmitButton from './layout/FormSubmitButton';
+import FormFieldPassword from './layout/FormFieldPassword';
 import PageHeader from './layout/PageHeader';
 import PageContainer from './layout/PageContainer';
 
@@ -56,10 +57,9 @@ class Registration extends Component {
             fullWidth
             required
           />
-          <TextField
+          <FormFieldPassword
             id="password"
             label="Password"
-            type="password"
             value={password}
             onChange={e => this.setState({ password: e.target.value })}
             margin="normal"

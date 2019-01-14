@@ -1,7 +1,7 @@
 import React, { Component, createContext } from 'react';
 
-import RequestStatus from './RequestStatus';
-import { getRecipes, addNewRecipe } from './Api';
+import RequestStatus from '../RequestStatus';
+import { getRecipes, addNewRecipe } from '../Api';
 
 const recipeCtx = createContext({
   recipes: [],

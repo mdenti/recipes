@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { TextField } from '@material-ui/core';
 
-import { withRecipeContextConsumer } from './RecipeContext';
+import { withRecipeContextConsumer } from './contexts/RecipeContext';
 import PageHeader from './layout/PageHeader';
 import PageContainer from './layout/PageContainer';
 import Form from './layout/Form';

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import RequestStatus from './RequestStatus';
-import { withRecipeContextConsumer } from './RecipeContext';
+import { withRecipeContextConsumer } from './contexts/RecipeContext';
 
 function RecipeView(props) {
   const { match, recipeCtx } = props;

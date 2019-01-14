@@ -2,7 +2,7 @@ import React from 'react';
 import { Grid, Typography } from '@material-ui/core';
 
 import RequestStatus from './RequestStatus';
-import { withRecipeContextConsumer } from './RecipeContext';
+import { withRecipeContextConsumer } from './contexts/RecipeContext';
 import GridItem from './layout/GridItem';
 import GridItemImage from './layout/GridItemImage';
 import PageHeader from './layout/PageHeader';

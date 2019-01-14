@@ -1,11 +1,18 @@
 const express = require('express');
 
-function getUsersRouter() {
+const users = require('../users');
+
+function getUsersRouter(ctx) {
   const router = express.Router();
 
-  /* GET users listing. */
-  router.get('/', (req, res) => {
-    res.send('respond with a resource');
+  router.post('/', async (req, res) => {
+    try {
+      const userId = await users.createNewUser(ctx, res.body);
+      res.send({ userId });
+    } catch (error) {
+      res.status(500).send({ error: 'could not create new user' });
+      throw error;
+    }
   });
 
   return router;

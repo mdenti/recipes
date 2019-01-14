@@ -24,3 +24,18 @@ export async function addNewRecipe(recipe) {
   });
   return getRecipes();
 }
+
+export async function authenticateUser() {
+  return false;
+}
+
+export async function registerNewUser(user) {
+  await apiRequest('/users', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(user),
+  });
+}

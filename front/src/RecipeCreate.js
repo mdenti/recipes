@@ -19,7 +19,9 @@ class RecipeCreate extends Component {
     this.save = this.save.bind(this);
   }
 
-  async save() {
+  async save(e) {
+    e.preventDefault();
+
     const { recipeCtx } = this.props;
     const { redirectToList, ...newRecipe } = this.state;
     await recipeCtx.addNewRecipe(newRecipe);
@@ -34,7 +36,7 @@ class RecipeCreate extends Component {
     return (
       <PageContainer>
         <PageHeader>Create new recipe</PageHeader>
-        <Form onSubmit={e => e.preventDefault()}>
+        <Form onSubmit={this.save}>
           <TextField
             id="name"
             label="Name"

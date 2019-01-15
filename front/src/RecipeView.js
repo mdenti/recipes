@@ -1,7 +1,7 @@
 import React from 'react';
 
 import RequestStatus from './RequestStatus';
-import { withRecipeContextConsumer } from './contexts/RecipeContext';
+import { recipeContextConsumer } from './contexts/RecipeContext';
 
 function RecipeView(props) {
   const { match, recipeCtx } = props;
@@ -21,4 +21,4 @@ function RecipeView(props) {
   );
 }
 
-export default withRecipeContextConsumer(RecipeView);
+export default recipeContextConsumer(RecipeView);

@@ -2,7 +2,7 @@ import React from 'react';
 import { Grid, Typography } from '@material-ui/core';
 
 import RequestStatus from './RequestStatus';
-import { withRecipeContextConsumer } from './contexts/RecipeContext';
+import { recipeContextConsumer } from './contexts/RecipeContext';
 import GridItem from './layout/GridItem';
 import GridItemImage from './layout/GridItemImage';
 import PageHeader from './layout/PageHeader';
@@ -39,4 +39,4 @@ function RecipeList(props) {
   );
 }
 
-export default withRecipeContextConsumer(RecipeList);
+export default recipeContextConsumer(RecipeList);

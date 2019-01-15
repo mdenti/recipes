@@ -9,7 +9,7 @@ const recipeCtx = createContext({
   requestStatus: RequestStatus.INACTIVE,
 });
 
-export function withRecipeContextProvider(WrappedComponent) {
+export function recipeContextProvider(WrappedComponent) {
   return class extends Component {
     constructor(props) {
       super(props);
@@ -51,7 +51,7 @@ export function withRecipeContextProvider(WrappedComponent) {
   };
 }
 
-export function withRecipeContextConsumer(WrappedComponent) {
+export function recipeContextConsumer(WrappedComponent) {
   return function component(props) {
     return (
       <recipeCtx.Consumer>

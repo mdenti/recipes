@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { CssBaseline } from '@material-ui/core';
 
-import { withRecipeContextProvider } from './contexts/RecipeContext';
+import { recipeContextProvider } from './contexts/RecipeContext';
 import { userContextProvider } from './contexts/UserContext';
 
 import Header from './Header';
@@ -19,4 +19,4 @@ function App() {
   );
 }
 
-export default userContextProvider(withRecipeContextProvider(App));
+export default userContextProvider(recipeContextProvider(App));

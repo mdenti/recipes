@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { TextField } from '@material-ui/core';
 
-import { withRecipeContextConsumer } from './contexts/RecipeContext';
+import { recipeContextConsumer } from './contexts/RecipeContext';
 import PageHeader from './layout/PageHeader';
 import PageContainer from './layout/PageContainer';
 import Form from './layout/Form';
@@ -60,4 +60,4 @@ class RecipeCreate extends Component {
   }
 }
 
-export default withRecipeContextConsumer(RecipeCreate);
+export default recipeContextConsumer(RecipeCreate);

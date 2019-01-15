@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import {
-  FormControl, InputLabel, Input, InputAdornment, IconButton,
+  InputAdornment, IconButton, TextField,
 } from '@material-ui/core';
-
 import { Visibility, VisibilityOff } from '@material-ui/icons';
 
 class FormFieldPassword extends Component {
@@ -14,16 +13,12 @@ class FormFieldPassword extends Component {
   }
 
   render() {
-    const {
-      fullWidth, margin, label, required, ...otherProps
-    } = this.props;
     const { showPassword } = this.state;
     return (
-      <FormControl fullWidth={fullWidth} margin={margin} required>
-        <InputLabel>{label}</InputLabel>
-        <Input
-          type={showPassword ? 'text' : 'password'}
-          endAdornment={(
+      <TextField
+        type={showPassword ? 'text' : 'password'}
+        InputProps={{
+          endAdornment: (
             <InputAdornment position="end">
               <IconButton
                 aria-label="Toggle password visibility"
@@ -32,10 +27,10 @@ class FormFieldPassword extends Component {
                 {showPassword ? <Visibility /> : <VisibilityOff />}
               </IconButton>
             </InputAdornment>
-          )}
-          {...otherProps}
-        />
-      </FormControl>
+          ),
+        }}
+        {...this.props}
+      />
     );
   }
 }

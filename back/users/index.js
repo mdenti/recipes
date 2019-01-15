@@ -7,11 +7,8 @@ async function getUserByEmail(ctx, email) {
 
 async function checkLoginInfo(ctx, { email, password }) {
   const user = await getUserByEmail(ctx.knex, email);
-  if (!user) {
-    throw new Error('User does not exist');
-  }
-  if (!await utils.passwordMatches(password, user.passwordHash)) {
-    throw new Error('Wrong password');
+  if (!user || !await utils.passwordMatches(password, user.passwordHash)) {
+    return null;
   }
   return user;
 }

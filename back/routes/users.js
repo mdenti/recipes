@@ -2,7 +2,7 @@ const express = require('express');
 
 const users = require('../users');
 
-function getUsersRouter(ctx) {
+function getUsersRouter(ctx, passport) {
   const router = express.Router();
 
   router.post('/', async (req, res) => {
@@ -14,6 +14,18 @@ function getUsersRouter(ctx) {
       throw error;
     }
   });
+
+  router.post('/login',
+    passport.authenticate('local'),
+    (req, res) => {
+      res.send();
+    });
+
+  router.get('/authenticate',
+    passport.authenticate('local'),
+    (req, res) => {
+      res.send();
+    });
 
   return router;
 }

@@ -1,13 +1,15 @@
 const createError = require('http-errors');
 const express = require('express');
+const expressSession = require('express-session');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
 const context = require('./context')();
+const passport = require('./passport')(context);
 
 const indexRouter = require('./routes/index')(context);
-const userRouter = require('./routes/users')(context);
+const userRouter = require('./routes/users')(context, passport);
 const recipesRouter = require('./routes/recipes')(context);
 
 const app = express();
@@ -26,10 +28,18 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+// TODO: set secret in env+config
+app.use(expressSession({ secret: 'keyboard cat', resave: true, saveUninitialized: false }));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', userRouter);
+app.use(passport.authenticate('local'));
 app.use('/recipes', recipesRouter);
 
 // catch 404 and forward to error handler

@@ -8,6 +8,15 @@ import PageContainer from './layout/PageContainer';
 import Form from './layout/Form';
 import FormSubmitButton from './layout/FormSubmitButton';
 
+import validationRules from './validation/rules';
+import withFormValidation from './validation/withFormValidation';
+
+const rules = {
+  name: [validationRules.required],
+  picture: [validationRules.url],
+};
+const FormElement = withFormValidation(Form, rules);
+
 class RecipeCreate extends Component {
   constructor(props) {
     super(props);
@@ -36,25 +45,25 @@ class RecipeCreate extends Component {
     return (
       <PageContainer>
         <PageHeader>Create new recipe</PageHeader>
-        <Form onSubmit={this.save}>
+        <FormElement onSubmit={this.save} fieldValues={{ name, picture }}>
           <TextField
-            id="name"
-            label="Name"
+            name="name"
+            label="Name *"
             value={name}
             onChange={e => this.setState({ name: e.target.value })}
             margin="normal"
             fullWidth
           />
           <TextField
-            id="picture"
+            name="picture"
             label="Picture"
             value={picture}
             onChange={e => this.setState({ picture: e.target.value })}
             margin="normal"
             fullWidth
           />
-          <FormSubmitButton onClick={this.save}>Submit</FormSubmitButton>
-        </Form>
+          <FormSubmitButton type="submit">Submit</FormSubmitButton>
+        </FormElement>
       </PageContainer>
     );
   }

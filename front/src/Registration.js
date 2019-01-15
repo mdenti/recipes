@@ -10,6 +10,15 @@ import FormFieldPassword from './layout/FormFieldPassword';
 import PageHeader from './layout/PageHeader';
 import PageContainer from './layout/PageContainer';
 
+import validationRules from './validation/rules';
+import withFormValidation from './validation/withFormValidation';
+
+const rules = {
+  email: [validationRules.required, validationRules.email],
+  password: [validationRules.required],
+};
+const FormElement = withFormValidation(Form, rules);
+
 class Registration extends Component {
   constructor(props) {
     super(props);
@@ -24,9 +33,7 @@ class Registration extends Component {
     e.preventDefault();
 
     const { userCtx } = this.props;
-    const { redirectToList, ...newUser } = this.state;
-    await userCtx.registerNewUser(newUser);
-    this.setState({ redirectToList: true });
+    await userCtx.registerNewUser(this.state);
   }
 
   render() {
@@ -46,28 +53,29 @@ class Registration extends Component {
     return (
       <PageContainer>
         <PageHeader>Register</PageHeader>
-        <Form onSubmit={this.save}>
+        <FormElement
+          onSubmit={this.save}
+          fieldValues={this.state}
+        >
           <TextField
-            id="email"
-            label="Email"
-            type="email"
+            name="email"
+            label="Email *"
+            type="text"
             value={email}
             onChange={e => this.setState({ email: e.target.value })}
             margin="normal"
             fullWidth
-            required
           />
           <FormFieldPassword
-            id="password"
-            label="Password"
+            name="password"
+            label="Password *"
             value={password}
             onChange={e => this.setState({ password: e.target.value })}
             margin="normal"
             fullWidth
-            required
           />
-          <FormSubmitButton onClick={this.save}>Submit</FormSubmitButton>
-        </Form>
+          <FormSubmitButton type="submit">Submit</FormSubmitButton>
+        </FormElement>
       </PageContainer>
     );
   }

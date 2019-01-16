@@ -7,6 +7,7 @@ const userCtx = createContext({
   user: {},
   loginUser: () => {},
   registerNewUser: () => {},
+  authenticateUser: () => {},
   requestStatus: RequestStatus.INACTIVE,
 });
 
@@ -19,17 +20,21 @@ export function userContextProvider(WrappedComponent) {
         user: null,
         loginUser: this.loginUser.bind(this),
         registerNewUser: this.registerNewUser.bind(this),
+        authenticateUser: this.authenticateUser.bind(this),
         requestStatus: RequestStatus.INACTIVE,
       };
     }
 
     async componentDidMount() {
-      this.setState({ requestStatus: RequestStatus.RUNNING });
+      this.authenticateUser();
+    }
+
+    async authenticateUser() {
       try {
         const user = await authenticateUser();
-        this.setState({ user, requestStatus: RequestStatus.INACTIVE });
+        this.setState({ user });
       } catch (error) {
-        this.setState({ user: {}, requestStatus: RequestStatus.FAILED });
+        this.setState({ user: null });
       }
     }
 

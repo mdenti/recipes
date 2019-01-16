@@ -1,7 +1,7 @@
 import React, { Component, createContext } from 'react';
 
 import RequestStatus from '../RequestStatus';
-import { getRecipes, addNewRecipe } from '../Api';
+import { addNewRecipe } from '../Api';
 
 const recipeCtx = createContext({
   recipes: [],
@@ -19,16 +19,6 @@ export function recipeContextProvider(WrappedComponent) {
         addNewRecipe: this.addNewRecipe.bind(this),
         requestStatus: RequestStatus.INACTIVE,
       };
-    }
-
-    async componentDidMount() {
-      this.setState({ requestStatus: RequestStatus.RUNNING });
-      try {
-        const initialRecipes = await getRecipes();
-        this.setState({ recipes: initialRecipes, requestStatus: RequestStatus.INACTIVE });
-      } catch (error) {
-        this.setState({ recipes: [], requestStatus: RequestStatus.FAILED });
-      }
     }
 
     async addNewRecipe(recipe) {

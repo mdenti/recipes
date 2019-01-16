@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
 import { TextField } from '@material-ui/core';
 
-import RequestStatus from './RequestStatus';
 import { userContextConsumer } from './contexts/UserContext';
 import Form from './layout/Form';
 import FormSubmitButton from './layout/FormSubmitButton';
@@ -37,18 +35,7 @@ class Login extends Component {
   }
 
   render() {
-    const { userCtx } = this.props;
     const { email, password } = this.state;
-
-    if (userCtx.requestStatus === RequestStatus.RUNNING) {
-      return <div>Loading..</div>;
-    }
-    if (userCtx.requestStatus === RequestStatus.FAILED) {
-      return <div>There was an error with the user registration, try again soon</div>;
-    }
-    if (userCtx.user && userCtx.requestStatus === RequestStatus.INACTIVE) {
-      return <Redirect to="/recipes" />;
-    }
 
     return (
       <PageContainer>

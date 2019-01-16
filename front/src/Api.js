@@ -25,11 +25,11 @@ export async function addNewRecipe(recipe) {
 }
 
 export async function authenticateUser() {
-  return false;
+  return apiRequest('/api/users/authenticate');
 }
 
 export async function registerNewUser(user) {
-  await apiRequest('/api/users', {
+  return apiRequest('/api/users', {
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -40,7 +40,7 @@ export async function registerNewUser(user) {
 }
 
 export async function loginUser(user) {
-  await apiRequest('/api/users/login', {
+  return apiRequest('/api/users/login', {
     method: 'POST',
     headers: {
       Accept: 'application/json',

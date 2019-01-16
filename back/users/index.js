@@ -6,7 +6,7 @@ async function getUserByEmail(ctx, email) {
 }
 
 async function checkLoginInfo(ctx, { email, password }) {
-  const user = await getUserByEmail(ctx.knex, email);
+  const user = await getUserByEmail(ctx, email);
   if (!user || !await utils.passwordMatches(password, user.passwordHash)) {
     return null;
   }

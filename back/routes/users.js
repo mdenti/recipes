@@ -8,7 +8,7 @@ function getUsersRouter(ctx, passport) {
   router.post('/', async (req, res) => {
     try {
       const userId = await users.createNewUser(ctx, req.body);
-      res.send({ userId });
+      res.send({ id: userId });
     } catch (error) {
       res.status(500).send({ error: 'could not create new user' });
       throw error;
@@ -18,13 +18,13 @@ function getUsersRouter(ctx, passport) {
   router.post('/login',
     passport.authenticate('local'),
     (req, res) => {
-      res.send();
+      res.send({ id: req.user.id });
     });
 
   router.get('/authenticate',
     passport.authenticate('local'),
     (req, res) => {
-      res.send();
+      res.send({ id: req.user.id });
     });
 
   return router;

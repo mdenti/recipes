@@ -18,29 +18,32 @@ const app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  next();
-});
-
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 // TODO: set secret in env+config
-app.use(expressSession({ secret: 'keyboard cat', resave: true, saveUninitialized: false }));
+app.use(expressSession({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true,
+}));
 
 app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', userRouter);
-app.use(passport.authenticate('local'));
-app.use('/recipes', recipesRouter);
+app.use('/api', indexRouter);
+app.use('/api/users', userRouter);
+app.use((req, res, next) => {
+  if (!req.user || !req.user.id) {
+    return res.status(401).send();
+  }
+  return next();
+});
+app.use('/api/recipes', recipesRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

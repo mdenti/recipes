@@ -6,7 +6,9 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
 const context = require('./context')();
-const passport = require('./passport')(context);
+const { configureAuthentication, requireUserLogin } = require('./passport');
+
+const passport = configureAuthentication(context);
 
 const indexRouter = require('./routes/index')(context);
 const userRouter = require('./routes/users')(context, passport);
@@ -37,12 +39,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api', indexRouter);
 app.use('/api/users', userRouter);
-app.use((req, res, next) => {
-  if (!req.user || !req.user.id) {
-    return res.status(401).send();
-  }
-  return next();
-});
+app.use(requireUserLogin);
 app.use('/api/recipes', recipesRouter);
 
 // catch 404 and forward to error handler

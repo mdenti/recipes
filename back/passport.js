@@ -28,4 +28,14 @@ function configureAuthentication(ctx) {
   return passport;
 }
 
-module.exports = configureAuthentication;
+function requireUserLogin(req, res, next) {
+  if (!req.user || !req.user.id) {
+    return res.status(401).send();
+  }
+  return next();
+}
+
+module.exports = {
+  configureAuthentication,
+  requireUserLogin,
+};

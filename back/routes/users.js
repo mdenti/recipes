@@ -1,6 +1,7 @@
 const express = require('express');
 
 const users = require('../users');
+const { requireUserLogin } = require('../passport');
 
 function getUsersRouter(ctx, passport) {
   const router = express.Router();
@@ -22,7 +23,7 @@ function getUsersRouter(ctx, passport) {
     });
 
   router.get('/authenticate',
-    passport.authenticate('local'),
+    requireUserLogin,
     (req, res) => {
       res.send({ id: req.user.id });
     });

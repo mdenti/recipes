@@ -1,10 +1,11 @@
 import React, { Component, createContext } from 'react';
 
 import RequestStatus from '../RequestStatus';
-import { authenticateUser, registerNewUser } from '../Api';
+import { authenticateUser, registerNewUser, loginUser } from '../Api';
 
 const userCtx = createContext({
   user: {},
+  loginUser: () => {},
   registerNewUser: () => {},
   requestStatus: RequestStatus.INACTIVE,
 });
@@ -16,6 +17,7 @@ export function userContextProvider(WrappedComponent) {
 
       this.state = {
         user: null,
+        loginUser: this.loginUser.bind(this),
         registerNewUser: this.registerNewUser.bind(this),
         requestStatus: RequestStatus.INACTIVE,
       };
@@ -28,6 +30,16 @@ export function userContextProvider(WrappedComponent) {
         this.setState({ user, requestStatus: RequestStatus.INACTIVE });
       } catch (error) {
         this.setState({ user: {}, requestStatus: RequestStatus.FAILED });
+      }
+    }
+
+    async loginUser(userData) {
+      this.setState({ requestStatus: RequestStatus.RUNNING });
+      try {
+        const user = await loginUser(userData);
+        this.setState({ user, requestStatus: RequestStatus.INACTIVE });
+      } catch (error) {
+        this.setState({ requestStatus: RequestStatus.FAILED });
       }
     }
 

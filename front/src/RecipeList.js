@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Grid, Typography } from '@material-ui/core';
 
 import RequestStatus from './RequestStatus';
@@ -18,25 +18,32 @@ function RecipeListItem(props) {
   );
 }
 
-function RecipeList(props) {
-  const { recipeCtx: { recipes, requestStatus } } = props;
-  return (
-    <PageContainer>
-      <PageHeader>Recipe list</PageHeader>
-      <Grid container spacing={16} justify="center">
-        {(() => {
-          if ((!recipes || !recipes.length) && requestStatus === RequestStatus.RUNNING) {
-            return 'Loading..';
+class RecipeList extends Component {
+  async componentDidMount() {
+    const { recipeCtx: { getRecipes } } = this.props;
+    await getRecipes();
+  }
+
+  render() {
+    const { recipeCtx: { recipes, requestStatus } } = this.props;
+    return (
+      <PageContainer>
+        <PageHeader>Recipe list</PageHeader>
+        <Grid container spacing={16} justify="center">
+          {(() => {
+            if ((!recipes || !recipes.length) && requestStatus === RequestStatus.RUNNING) {
+              return 'Loading..';
+            }
+            if (!recipes || !recipes.length) {
+              return 'No recipes found';
+            }
+            return recipes.map(recipe => <RecipeListItem recipe={recipe} key={recipe.id} />);
+          })()
           }
-          if (!recipes || !recipes.length) {
-            return 'No recipes found';
-          }
-          return recipes.map(recipe => <RecipeListItem recipe={recipe} key={recipe.id} />);
-        })()
-        }
-      </Grid>
-    </PageContainer>
-  );
+        </Grid>
+      </PageContainer>
+    );
+  }
 }
 
 export default recipeContextConsumer(RecipeList);

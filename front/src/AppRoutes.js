@@ -1,8 +1,8 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Switch } from 'react-router-dom';
 
-import requireLoggedInUser from './authentication/requireLoggedInUser';
-import requireLoggedOutUser from './authentication/requireLoggedOutUser';
+import LoggedInRoute from './routes/LoggedInRoute';
+import LoggedOutRoute from './routes/LoggedOutRoute';
 
 import RecipeList from './RecipeList';
 import RecipeView from './RecipeView';
@@ -13,11 +13,11 @@ import Registration from './Registration';
 function AppRoutes() {
   return (
     <Switch>
-      <Route exact path="/" component={requireLoggedOutUser(Login)} />
-      <Route exact path="/user/register" component={requireLoggedOutUser(Registration)} />
-      <Route exact path="/recipes" component={requireLoggedInUser(RecipeList)} />
-      <Route exact path="/recipe/create" component={requireLoggedInUser(RecipeCreate)} />
-      <Route exact path="/recipe/:id" component={requireLoggedInUser(RecipeView)} />
+      <LoggedOutRoute exact path="/" component={Login} />
+      <LoggedOutRoute exact path="/user/register" component={Registration} />
+      <LoggedInRoute exact path="/recipes" component={RecipeList} />
+      <LoggedInRoute exact path="/recipe/create" component={RecipeCreate} />
+      <LoggedInRoute exact path="/recipe/:id" component={RecipeView} />
     </Switch>
   );
 }

@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { TextField } from '@material-ui/core';
 
-import { recipeContextConsumer } from './contexts/RecipeContext';
-import PageHeader from './layout/PageHeader';
-import PageContainer from './layout/PageContainer';
-import Form from './layout/Form';
-import FormSubmitButton from './layout/FormSubmitButton';
+import { recipeContextConsumer } from '../contexts/RecipeContext';
+import PageHeader from '../layout/PageHeader';
+import PageContainer from '../layout/PageContainer';
+import Form from '../layout/Form';
+import FormSubmitButton from '../layout/FormSubmitButton';
 
-import validationRules from './validation/rules';
-import withFormValidation from './validation/withFormValidation';
+import validationRules from '../validation/rules';
+import withFormValidation from '../validation/withFormValidation';
 
 const rules = {
   name: [validationRules.required],

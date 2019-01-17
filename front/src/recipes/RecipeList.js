@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { Grid, Typography } from '@material-ui/core';
 
-import RequestStatus from './RequestStatus';
-import { recipeContextConsumer } from './contexts/RecipeContext';
-import GridItem from './layout/GridItem';
-import GridItemImage from './layout/GridItemImage';
-import PageHeader from './layout/PageHeader';
-import PageContainer from './layout/PageContainer';
+import RequestStatus from '../RequestStatus';
+import { recipeContextConsumer } from '../contexts/RecipeContext';
+import GridItem from '../layout/GridItem';
+import GridItemImage from '../layout/GridItemImage';
+import PageHeader from '../layout/PageHeader';
+import PageContainer from '../layout/PageContainer';
 
 function RecipeListItem(props) {
   const { recipe: { name, picture, id } } = props;

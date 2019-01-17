@@ -12,8 +12,12 @@ export async function getRecipes() {
   return apiRequest('/api/recipes');
 }
 
+export async function getRecipe(id) {
+  return apiRequest(`/api/recipes/${id}`);
+}
+
 export async function addNewRecipe(recipe) {
-  await apiRequest('/api/recipes', {
+  return apiRequest('/api/recipes', {
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -21,7 +25,6 @@ export async function addNewRecipe(recipe) {
     },
     body: JSON.stringify(recipe),
   });
-  return getRecipes();
 }
 
 export async function authenticateUser() {

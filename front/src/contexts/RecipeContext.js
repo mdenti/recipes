@@ -1,9 +1,10 @@
 import React, { Component, createContext } from 'react';
 
 import RequestStatus from '../RequestStatus';
-import { addNewRecipe, getRecipes } from '../Api';
+import { addNewRecipe, getRecipes, getRecipe } from '../Api';
 
 const recipeCtx = createContext({
+  recipe: null,
   recipes: [],
   getRecipes: () => {},
   addNewRecipe: () => {},
@@ -17,11 +18,23 @@ export function recipeContextProvider(WrappedComponent) {
       super(props);
 
       this.state = {
+        recipe: null,
         recipes: [],
+        getRecipe: this.getRecipe.bind(this),
         getRecipes: this.getRecipes.bind(this),
         addNewRecipe: this.addNewRecipe.bind(this),
         requestStatus: RequestStatus.INACTIVE,
       };
+    }
+
+    async getRecipe(id) {
+      this.setState({ requestStatus: RequestStatus.RUNNING });
+      try {
+        const recipe = await getRecipe(id);
+        this.setState({ recipe, requestStatus: RequestStatus.INACTIVE });
+      } catch (error) {
+        this.setState({ requestStatus: RequestStatus.FAILED });
+      }
     }
 
     async getRecipes() {
@@ -37,8 +50,8 @@ export function recipeContextProvider(WrappedComponent) {
     async addNewRecipe(recipe) {
       this.setState({ requestStatus: RequestStatus.RUNNING });
       try {
-        const recipes = await addNewRecipe(recipe);
-        this.setState({ recipes, requestStatus: RequestStatus.INACTIVE });
+        await addNewRecipe(recipe);
+        this.setState({ requestStatus: RequestStatus.INACTIVE });
       } catch (error) {
         this.setState({ requestStatus: RequestStatus.FAILED });
       }

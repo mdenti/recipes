@@ -1,3 +1,5 @@
+const { InputError } = require('../errors');
+
 const RECIPE_TABLE_NAME = 'recipes';
 
 const NEW_RECIPE_ALLOWED_FIELDS = [
@@ -15,12 +17,12 @@ function sanitizeNewRecipe(input) {
 const REQUIRED_RECIPE_FIELDS = ['name'];
 function validateRecipe(input) {
   if (!input) {
-    throw new Error('Validation failed: Recipe should not be NULL');
+    throw new InputError('Validation failed: Recipe should not be NULL');
   }
 
   REQUIRED_RECIPE_FIELDS.forEach((f) => {
     if (!input[f] || !input[f].length) {
-      throw new Error(`Validation failed: field ${f} cannot be empty`);
+      throw new InputError(`Validation failed: field ${f} cannot be empty`);
     }
   });
 

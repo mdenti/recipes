@@ -10,7 +10,7 @@ function getRecipesRouter(ctx) {
       const recipes = await getAllRecipes(ctx);
       res.send(recipes);
     } catch (error) {
-      res.status(500).send({ error: 'could not fetch recipes' });
+      res.status(error.statusCode || 500).send({ error: 'error fetching the recipes' });
       throw error;
     }
   });
@@ -19,9 +19,22 @@ function getRecipesRouter(ctx) {
     try {
       const newRecipeId = await addRecipe(ctx, req.body);
       const newRecipe = await getRecipeById(ctx, newRecipeId);
-      res.send(newRecipe);
+
+      if (!newRecipe) return res.status(500).send({ error: 'there was a problem adding the new recipe' });
+      return res.send(newRecipe);
     } catch (error) {
-      res.status(400).send({ error: 'could not add new recipe' });
+      res.status(error.statusCode || 500).send({ error: 'error adding the new recipe' });
+      throw error;
+    }
+  });
+
+  router.get('/:id', async (req, res) => {
+    try {
+      const recipe = await getRecipeById(ctx, parseInt(req.params.id, 10));
+      if (!recipe) res.status(404).send({ error: 'could not find recipe' });
+      res.send(recipe);
+    } catch (error) {
+      res.status(error.statusCode || 500).send({ error: 'error fetching the recipe' });
       throw error;
     }
   });

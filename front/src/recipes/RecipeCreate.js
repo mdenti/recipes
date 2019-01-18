@@ -73,7 +73,7 @@ class RecipeCreate extends Component {
             onChange={e => this.setState({ description: e.target.value })}
             margin="normal"
             fullWidth
-            multiline="true"
+            multiline
             rows={4}
             rowsMax={8}
           />

@@ -14,6 +14,7 @@ import withFormValidation from '../validation/withFormValidation';
 const rules = {
   name: [validationRules.required],
   picture: [validationRules.url],
+  description: [],
 };
 const FormElement = withFormValidation(Form, rules);
 
@@ -23,6 +24,7 @@ class RecipeCreate extends Component {
     this.state = {
       name: '',
       picture: '',
+      description: '',
       redirectToList: false,
     };
     this.save = this.save.bind(this);
@@ -38,7 +40,9 @@ class RecipeCreate extends Component {
   }
 
   render() {
-    const { redirectToList, name, picture } = this.state;
+    const {
+      redirectToList, name, picture, description,
+    } = this.state;
     if (redirectToList) {
       return <Redirect to="/recipes" />;
     }
@@ -61,6 +65,17 @@ class RecipeCreate extends Component {
             onChange={e => this.setState({ picture: e.target.value })}
             margin="normal"
             fullWidth
+          />
+          <TextField
+            name="description"
+            label="Description"
+            value={description}
+            onChange={e => this.setState({ description: e.target.value })}
+            margin="normal"
+            fullWidth
+            multiline="true"
+            rows={4}
+            rowsMax={8}
           />
           <FormSubmitButton type="submit">Submit</FormSubmitButton>
         </FormElement>

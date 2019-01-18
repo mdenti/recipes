@@ -3,7 +3,7 @@ const { InputError } = require('../errors');
 const RECIPE_TABLE_NAME = 'recipes';
 
 const NEW_RECIPE_ALLOWED_FIELDS = [
-  'name', 'picture', 'description',
+  'name', 'picture', 'description', 'userId',
 ];
 function sanitizeNewRecipe(input) {
   if (!input) return false;

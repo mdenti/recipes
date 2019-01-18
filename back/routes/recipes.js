@@ -17,7 +17,8 @@ function getRecipesRouter(ctx) {
 
   router.post('/', async (req, res) => {
     try {
-      const newRecipeId = await addRecipe(ctx, req.body);
+      const recipeData = Object.assign({}, req.body, { userId: req.user.id });
+      const newRecipeId = await addRecipe(ctx, recipeData);
       const newRecipe = await getRecipeById(ctx, newRecipeId);
 
       if (!newRecipe) return res.status(500).send({ error: 'there was a problem adding the new recipe' });

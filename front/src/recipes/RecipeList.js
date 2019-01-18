@@ -4,6 +4,7 @@ import { Grid, Typography } from '@material-ui/core';
 import RequestStatus from '../RequestStatus';
 import { recipeContextConsumer } from '../contexts/RecipeContext';
 import GridItem from '../layout/GridItem';
+import GridContainer from '../layout/GridContainer';
 import GridItemImage from '../layout/GridItemImage';
 import PageHeader from '../layout/PageHeader';
 import PageContainer from '../layout/PageContainer';
@@ -29,18 +30,20 @@ class RecipeList extends Component {
     return (
       <PageContainer>
         <PageHeader>Recipe list</PageHeader>
-        <Grid container spacing={16} justify="center">
-          {(() => {
-            if ((!recipes || !recipes.length) && requestStatus === RequestStatus.RUNNING) {
-              return 'Loading..';
+        <GridContainer>
+          <Grid container spacing={16} justify="center">
+            {(() => {
+              if ((!recipes || !recipes.length) && requestStatus === RequestStatus.RUNNING) {
+                return 'Loading..';
+              }
+              if (!recipes || !recipes.length) {
+                return 'No recipes found';
+              }
+              return recipes.map(recipe => <RecipeListItem recipe={recipe} key={recipe.id} />);
+            })()
             }
-            if (!recipes || !recipes.length) {
-              return 'No recipes found';
-            }
-            return recipes.map(recipe => <RecipeListItem recipe={recipe} key={recipe.id} />);
-          })()
-          }
-        </Grid>
+          </Grid>
+        </GridContainer>
       </PageContainer>
     );
   }

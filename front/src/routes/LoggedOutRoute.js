@@ -3,8 +3,8 @@ import { Route, Redirect } from 'react-router-dom';
 
 import { userContextConsumer } from '../contexts/UserContext';
 
-function LoggedOutRoute({ userCtx, location, ...props }) {
-  const { state: { from } } = location || { state: { from: { pathname: '/recipes' } } };
+function LoggedOutRoute({ userCtx, location: { state }, ...props }) {
+  const { from } = state || { from: { pathname: '/recipes' } };
   if (userCtx.user) {
     return <Redirect to={from} />;
   }

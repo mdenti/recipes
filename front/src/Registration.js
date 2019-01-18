@@ -47,7 +47,7 @@ class Registration extends Component {
       return <div>There was an error with the user registration, try again soon</div>;
     }
     if (userCtx.user && userCtx.requestStatus === RequestStatus.INACTIVE) {
-      return <Redirect to="/recipes" />;
+      return <Redirect to="/" />;
     }
 
     return (

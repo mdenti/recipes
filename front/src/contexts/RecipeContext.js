@@ -1,13 +1,16 @@
 import React, { Component, createContext } from 'react';
 
 import RequestStatus from '../RequestStatus';
-import { addNewRecipe, getRecipes, getRecipe } from '../Api';
+import {
+  addNewRecipe, getRecipes, getRecipe, deleteRecipe,
+} from '../Api';
 
 const recipeCtx = createContext({
   recipe: null,
   recipes: [],
   getRecipes: () => {},
   addNewRecipe: () => {},
+  deleteRecipe: () => {},
   requestStatus: RequestStatus.INACTIVE,
 });
 export default recipeCtx;
@@ -23,6 +26,7 @@ export function recipeContextProvider(WrappedComponent) {
         getRecipe: this.getRecipe.bind(this),
         getRecipes: this.getRecipes.bind(this),
         addNewRecipe: this.addNewRecipe.bind(this),
+        deleteRecipe: this.deleteRecipe.bind(this),
         requestStatus: RequestStatus.INACTIVE,
       };
     }
@@ -51,6 +55,16 @@ export function recipeContextProvider(WrappedComponent) {
       this.setState({ requestStatus: RequestStatus.RUNNING });
       try {
         await addNewRecipe(recipe);
+        this.setState({ requestStatus: RequestStatus.INACTIVE });
+      } catch (error) {
+        this.setState({ requestStatus: RequestStatus.FAILED });
+      }
+    }
+
+    async deleteRecipe(recipe) {
+      this.setState({ requestStatus: RequestStatus.RUNNING });
+      try {
+        await deleteRecipe(recipe);
         this.setState({ requestStatus: RequestStatus.INACTIVE });
       } catch (error) {
         this.setState({ requestStatus: RequestStatus.FAILED });

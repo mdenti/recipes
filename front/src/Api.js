@@ -27,6 +27,12 @@ export async function addNewRecipe(recipe) {
   });
 }
 
+export async function deleteRecipe(id) {
+  return apiRequest(`/api/recipes/${id}`, {
+    method: 'DELETE',
+  });
+}
+
 export async function authenticateUser() {
   return apiRequest('/api/users/authenticate');
 }

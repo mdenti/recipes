@@ -33,6 +33,17 @@ export async function deleteRecipe(id) {
   });
 }
 
+export async function updateRecipe(id, recipe) {
+  return apiRequest(`/api/recipes/${id}`, {
+    method: 'PUT',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(recipe),
+  });
+}
+
 export async function authenticateUser() {
   return apiRequest('/api/users/authenticate');
 }

@@ -8,7 +8,7 @@ function Header({ userCtx: { user } }) {
   const loggedInNavigation = (
     <Fragment>
       <Button to="/recipes" component={NavLink}>Recipes</Button>
-      <Button to="/recipe/create" component={NavLink}>Create new recipe</Button>
+      <Button to="/recipes/new" component={NavLink}>Create new recipe</Button>
     </Fragment>
   );
   const loggedOutNavigation = (

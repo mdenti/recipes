@@ -12,7 +12,7 @@ import PageContainer from '../layout/PageContainer';
 function RecipeListItem(props) {
   const { recipe: { name, picture, id } } = props;
   return (
-    <GridItem linkTo={`/recipe/${id}`}>
+    <GridItem linkTo={`/recipes/${id}`}>
       <GridItemImage src={picture} alt={name} />
       <Typography variant="h6" align="center">{name}</Typography>
     </GridItem>

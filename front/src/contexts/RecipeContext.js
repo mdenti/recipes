@@ -2,7 +2,7 @@ import React, { Component, createContext } from 'react';
 
 import RequestStatus from '../RequestStatus';
 import {
-  addNewRecipe, getRecipes, getRecipe, deleteRecipe,
+  addNewRecipe, getRecipes, getRecipe, deleteRecipe, updateRecipe,
 } from '../Api';
 
 const recipeCtx = createContext({
@@ -11,6 +11,7 @@ const recipeCtx = createContext({
   getRecipes: () => {},
   addNewRecipe: () => {},
   deleteRecipe: () => {},
+  updateRecipe: () => {},
   requestStatus: RequestStatus.INACTIVE,
 });
 export default recipeCtx;
@@ -27,6 +28,7 @@ export function recipeContextProvider(WrappedComponent) {
         getRecipes: this.getRecipes.bind(this),
         addNewRecipe: this.addNewRecipe.bind(this),
         deleteRecipe: this.deleteRecipe.bind(this),
+        updateRecipe: this.updateRecipe.bind(this),
         requestStatus: RequestStatus.INACTIVE,
       };
     }
@@ -36,8 +38,10 @@ export function recipeContextProvider(WrappedComponent) {
       try {
         const recipe = await getRecipe(id);
         this.setState({ recipe, requestStatus: RequestStatus.INACTIVE });
+        return recipe;
       } catch (error) {
         this.setState({ requestStatus: RequestStatus.FAILED });
+        return null;
       }
     }
 
@@ -65,6 +69,16 @@ export function recipeContextProvider(WrappedComponent) {
       this.setState({ requestStatus: RequestStatus.RUNNING });
       try {
         await deleteRecipe(recipe);
+        this.setState({ requestStatus: RequestStatus.INACTIVE });
+      } catch (error) {
+        this.setState({ requestStatus: RequestStatus.FAILED });
+      }
+    }
+
+    async updateRecipe(id, recipe) {
+      this.setState({ requestStatus: RequestStatus.RUNNING });
+      try {
+        await updateRecipe(id, recipe);
         this.setState({ requestStatus: RequestStatus.INACTIVE });
       } catch (error) {
         this.setState({ requestStatus: RequestStatus.FAILED });

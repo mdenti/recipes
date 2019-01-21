@@ -9,6 +9,7 @@ import RecipeView from './recipes/RecipeView';
 import RecipeCreate from './recipes/RecipeCreate';
 import Login from './Login';
 import Registration from './Registration';
+import RecipeEdit from './recipes/RecipeEdit';
 
 function AppRoutes() {
   return (
@@ -16,8 +17,9 @@ function AppRoutes() {
       <LoggedOutRoute exact path="/" component={Login} />
       <LoggedOutRoute exact path="/user/register" component={Registration} />
       <LoggedInRoute exact path="/recipes" component={RecipeList} />
-      <LoggedInRoute exact path="/recipe/create" component={RecipeCreate} />
-      <LoggedInRoute exact path="/recipe/:id" component={RecipeView} />
+      <LoggedInRoute exact path="/recipes/new" component={RecipeCreate} />
+      <LoggedInRoute exact path="/recipes/:id" component={RecipeView} />
+      <LoggedInRoute exact path="/recipes/:id/edit" component={RecipeEdit} />
     </Switch>
   );
 }

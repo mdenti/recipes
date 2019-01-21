@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, NavLink } from 'react-router-dom';
 import {
   Grid, Button, Toolbar, Typography,
 } from '@material-ui/core';
@@ -15,10 +15,11 @@ import GridItemImage from '../layout/GridItemImage';
 import Divider from '../layout/PaddedDivider';
 
 function RecipeActions(props) {
-  const { deleteAction } = props;
+  const { recipeId, deleteAction } = props;
   return (
     <Fragment>
       <Toolbar variant="dense" disableGutters>
+        <Button to={`/recipes/${recipeId}/edit`} component={NavLink}>Edit</Button>
         <Button onClick={deleteAction}>Delete</Button>
       </Toolbar>
       <Divider />
@@ -72,7 +73,7 @@ class RecipeView extends Component {
               <GridItemImage src={recipe.picture} alt={recipe.name} />
             </Grid>
             <Grid item xs={12} sm={6} lg={4}>
-              {recipe.userId === user.id ? <RecipeActions deleteAction={this.deleteRecipe} /> : ''}
+              {recipe.userId === user.id ? <RecipeActions deleteAction={this.deleteRecipe} recipeId={recipe.id} /> : ''}
               <Typography variant="body1">{recipe.description}</Typography>
             </Grid>
           </Grid>

@@ -24,9 +24,16 @@ async function deleteRecipe(knex, id) {
     .where({ id });
 }
 
+async function updateRecipe(knex, id, recipeData) {
+  return knex(RECIPE_TABLE_NAME)
+    .update(recipeData)
+    .where({ id });
+}
+
 module.exports = {
   getAllRecipes,
   getRecipeById,
   insertNewRecipe,
   deleteRecipe,
+  updateRecipe,
 };

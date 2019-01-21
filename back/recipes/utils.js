@@ -5,7 +5,7 @@ const RECIPE_TABLE_NAME = 'recipes';
 const NEW_RECIPE_ALLOWED_FIELDS = [
   'name', 'picture', 'description', 'userId',
 ];
-function sanitizeNewRecipe(input) {
+function sanitizeRecipeData(input) {
   if (!input) return false;
 
   return Object.keys(input)
@@ -31,6 +31,6 @@ function validateRecipe(input) {
 
 module.exports = {
   RECIPE_TABLE_NAME,
-  sanitizeNewRecipe,
+  sanitizeRecipeData,
   validateRecipe,
 };

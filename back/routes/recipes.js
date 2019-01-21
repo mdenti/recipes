@@ -1,7 +1,11 @@
 const express = require('express');
 
 const {
-  getAllRecipes, addRecipe, getRecipeById, deleteRecipe,
+  getAllRecipes,
+  addRecipe,
+  getRecipeById,
+  deleteRecipe,
+  updateRecipe,
 } = require('../recipes');
 
 function getRecipesRouter(ctx) {
@@ -21,9 +25,8 @@ function getRecipesRouter(ctx) {
     try {
       const recipeData = Object.assign({}, req.body, { userId: req.user.id });
       const newRecipeId = await addRecipe(ctx, recipeData);
-      const newRecipe = await getRecipeById(ctx, newRecipeId);
 
-      res.send(newRecipe);
+      res.send(newRecipeId);
     } catch (error) {
       res.status(error.statusCode || 500).send({ error: 'error adding the new recipe' });
       next(error);
@@ -48,6 +51,17 @@ function getRecipesRouter(ctx) {
       return res.send();
     } catch (error) {
       res.status(error.statusCode || 500).send({ error: 'error deleting the recipe' });
+      return next(error);
+    }
+  });
+
+  router.put('/:id', async (req, res, next) => {
+    try {
+      const recipeId = parseInt(req.params.id, 10);
+      await updateRecipe(ctx, recipeId, req.user.id, req.body);
+      return res.send();
+    } catch (error) {
+      res.status(error.statusCode || 500).send({ error: 'error updating the recipe' });
       return next(error);
     }
   });

@@ -1,6 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import { Redirect } from 'react-router-dom';
-import { Grid, Button, Divider } from '@material-ui/core';
+import {
+  Grid, Button, Toolbar, Typography,
+} from '@material-ui/core';
 
 import RequestStatus from '../RequestStatus';
 import { userContextConsumer } from '../contexts/UserContext';
@@ -10,14 +12,15 @@ import PageHeader from '../layout/PageHeader';
 import PageContainer from '../layout/PageContainer';
 import GridContainer from '../layout/GridContainer';
 import GridItemImage from '../layout/GridItemImage';
+import Divider from '../layout/PaddedDivider';
 
 function RecipeActions(props) {
   const { deleteAction } = props;
   return (
     <Fragment>
-      <div>
+      <Toolbar variant="dense" disableGutters>
         <Button onClick={deleteAction}>Delete</Button>
-      </div>
+      </Toolbar>
       <Divider />
     </Fragment>
   );
@@ -70,7 +73,7 @@ class RecipeView extends Component {
             </Grid>
             <Grid item xs={12} sm={6} lg={4}>
               {recipe.userId === user.id ? <RecipeActions deleteAction={this.deleteRecipe} /> : ''}
-              {recipe.description}
+              <Typography variant="body1">{recipe.description}</Typography>
             </Grid>
           </Grid>
         </GridContainer>

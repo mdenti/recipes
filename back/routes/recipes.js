@@ -1,42 +1,54 @@
 const express = require('express');
 
-const { getAllRecipes, addRecipe, getRecipeById } = require('../recipes');
+const {
+  getAllRecipes, addRecipe, getRecipeById, deleteRecipe,
+} = require('../recipes');
 
 function getRecipesRouter(ctx) {
   const router = express.Router();
 
-  router.get('/', async (req, res) => {
+  router.get('/', async (req, res, next) => {
     try {
       const recipes = await getAllRecipes(ctx);
       res.send(recipes);
     } catch (error) {
       res.status(error.statusCode || 500).send({ error: 'error fetching the recipes' });
-      throw error;
+      next(error);
     }
   });
 
-  router.post('/', async (req, res) => {
+  router.post('/', async (req, res, next) => {
     try {
       const recipeData = Object.assign({}, req.body, { userId: req.user.id });
       const newRecipeId = await addRecipe(ctx, recipeData);
       const newRecipe = await getRecipeById(ctx, newRecipeId);
 
-      if (!newRecipe) return res.status(500).send({ error: 'there was a problem adding the new recipe' });
-      return res.send(newRecipe);
+      res.send(newRecipe);
     } catch (error) {
       res.status(error.statusCode || 500).send({ error: 'error adding the new recipe' });
-      throw error;
+      next(error);
     }
   });
 
-  router.get('/:id', async (req, res) => {
+  router.get('/:id', async (req, res, next) => {
     try {
       const recipe = await getRecipeById(ctx, parseInt(req.params.id, 10));
-      if (!recipe) res.status(404).send({ error: 'could not find recipe' });
       res.send(recipe);
     } catch (error) {
       res.status(error.statusCode || 500).send({ error: 'error fetching the recipe' });
-      throw error;
+      next(error);
+    }
+  });
+
+  router.delete('/:id', async (req, res, next) => {
+    try {
+      const recipeId = parseInt(req.params.id, 10);
+      const deleted = await deleteRecipe(ctx, recipeId, req.user.id);
+      if (!deleted) return res.status(500).send({ error: 'no recipe was deleted, weird stuff..' });
+      return res.send();
+    } catch (error) {
+      res.status(error.statusCode || 500).send({ error: 'error deleting the recipe' });
+      return next(error);
     }
   });
 

@@ -12,9 +12,7 @@ class RecipeEdit extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
-      picture: '',
-      description: '',
+      recipe: null,
       redirectToRecipePage: false,
     };
     this.onFieldUpdate = this.onFieldUpdate.bind(this);
@@ -23,30 +21,32 @@ class RecipeEdit extends Component {
 
   async componentDidMount() {
     const { match, recipeCtx } = this.props;
-    const { name, picture, description } = await recipeCtx.getRecipe(match.params.id);
-    this.setState({ name, picture, description });
+    const recipe = await recipeCtx.getRecipe(match.params.id);
+    this.setState({ recipe });
   }
 
   onFieldUpdate(e) {
-    this.setState({ [e.target.name]: e.target.value });
+    const { recipe } = this.state;
+    const updatedRecipe = Object.assign({}, recipe, { [e.target.name]: e.target.value });
+    this.setState({ recipe: updatedRecipe });
   }
 
   async save(e) {
     e.preventDefault();
 
     const { match, recipeCtx } = this.props;
-    const { redirectToRecipePage, ...newRecipe } = this.state;
-    await recipeCtx.updateRecipe(match.params.id, newRecipe);
+    const { recipe } = this.state;
+    await recipeCtx.updateRecipe(match.params.id, recipe);
     this.setState({ redirectToRecipePage: true });
   }
 
   render() {
     const {
-      name, picture, description,
+      recipe,
       redirectToRecipePage,
     } = this.state;
 
-    const { match, recipeCtx: { recipe, requestStatus } } = this.props;
+    const { match, recipeCtx: { requestStatus } } = this.props;
 
     if (redirectToRecipePage) {
       return <Redirect to={`/recipes/${match.params.id}`} />;
@@ -63,9 +63,7 @@ class RecipeEdit extends Component {
       <PageContainer>
         <PageHeader>Edit recipe</PageHeader>
         <RecipeEditForm
-          name={name}
-          picture={picture}
-          description={description}
+          recipe={recipe}
           onUpdate={this.onFieldUpdate}
           onSubmit={this.save}
         />

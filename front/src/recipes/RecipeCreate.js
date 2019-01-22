@@ -11,9 +11,7 @@ class RecipeCreate extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
-      picture: '',
-      description: '',
+      recipe: null,
       redirectToList: false,
     };
     this.onFieldUpdate = this.onFieldUpdate.bind(this);
@@ -28,14 +26,14 @@ class RecipeCreate extends Component {
     e.preventDefault();
 
     const { recipeCtx } = this.props;
-    const { redirectToList, ...newRecipe } = this.state;
-    await recipeCtx.addNewRecipe(newRecipe);
+    const { recipe } = this.state;
+    await recipeCtx.addNewRecipe(recipe);
     this.setState({ redirectToList: true });
   }
 
   render() {
     const {
-      redirectToList, name, picture, description,
+      redirectToList, recipe,
     } = this.state;
     if (redirectToList) {
       return <Redirect to="/recipes" />;
@@ -44,9 +42,7 @@ class RecipeCreate extends Component {
       <PageContainer>
         <PageHeader>Create new recipe</PageHeader>
         <RecipeEditForm
-          name={name}
-          picture={picture}
-          description={description}
+          recipe={recipe}
           onUpdate={this.onFieldUpdate}
           onSubmit={this.save}
         />

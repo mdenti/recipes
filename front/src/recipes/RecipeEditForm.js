@@ -15,9 +15,8 @@ const rules = {
 const FormElement = withFormValidation(Form, rules);
 
 function RecipeEditForm(props) {
-  const {
-    name, picture, description, onUpdate, onSubmit,
-  } = props;
+  const { recipe, onUpdate, onSubmit } = props;
+  const { name, picture, description } = recipe;
   return (
     <FormElement onSubmit={onSubmit} fieldValues={{ name, picture, description }}>
       <TextField
